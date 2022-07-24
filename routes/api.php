@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductsController;
 
 /*
@@ -28,6 +29,14 @@ Route::get('/users', [UserController::class, 'index']);
 Route::post('/users/{id}', [UserController::class, 'show']);
 Route::put('/users/edit/{id}', [UserController::class, 'update']);
 Route::delete('/users/delete/{id}', [UserController::class, 'destroy']);
+
+// Admin
+Route::post('/admin/register', [AdminController::class, 'register']);
+Route::post('/admin/login',[AdminController::class, 'login']);
+Route::post('/admin/logout',[AdminController::class, 'logout']);
+Route::get('/admins', [AdminController::class, 'index']);
+Route::put('/admin/edit/{id}', [AdminController::class, 'update']);
+Route::delete('admin/delete/{id}', [AdminController::class, 'destroy']);
 
 // Product
 Route::post('/products/create', [ProductsController::class, 'store']);
