@@ -61,4 +61,62 @@ class CartController extends Controller
 
             return response()->json($data, 201);
     }
+
+    public function orderUser(Request $request)
+    {
+        $email = auth()->user()->email;
+        $orders = Order::where('order_email',$email)->get();
+        if($orders ->isEmpty()){
+            $data = [
+                'messages'=>'Not Found Data Orders',
+                'status'=>400,
+            ];
+            return response()->json($data, 400);
+        }else{
+            $data = [
+                'messages'=>'Get Data Orders User',
+                'status'=>200,
+                'data'=>$orders     
+            ];
+            return response()->json($data, 200);
+        }
+    }
+
+    public function checkout(Request $request)
+    {
+        $email = auth()->user()->email;
+        $orders = Order::where('order_email',$email)->get();
+        $price = 0;
+        if ($orders ->isEmpty()) {
+            $data = [
+                'messages'=>'Not Found Data Orders',
+                'status'=>400,
+            ];
+            return response()->json($data, 400);
+        } else {
+            foreach ($orders as $item) {
+                # code...
+                $price = $price + $item->ammount;
+            }
+            foreach ($orders as $key ) {
+                # code...
+                $key -> order_status = "Checkout";
+                
+                $key -> update();        
+            } 
+            $totalItem = count($orders);
+            $data = [
+                'messages'=> 'All Products in Order, Successfully Checkout',
+                'status'=>201,
+                'data'=>[
+                    'user'=>$email,
+                    'products'=>$orders,
+                    'total_item'=>$totalItem,
+                    'total_price'=>$price
+                ]
+                ];
+                return response()->json($data, 200);
+        }
+        
+    }
 }

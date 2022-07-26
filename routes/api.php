@@ -49,3 +49,5 @@ Route::delete('/products/delete/{id}', [ProductsController::class, 'destroy']);
 // Cart
 Route::get('/cart', [CartController::class, 'index'])->middleware('jwt.verify');
 Route::post('/addCart/{product_id}', [CartController::class, 'addCart'])->middleware('jwt.verify');
+Route::get('/order_user', [CartController::class, 'orderUser'])->middleware('jwt.verify');
+Route::post('/checkout', [CartController::class, 'checkout'])->middleware('jwt.verify');

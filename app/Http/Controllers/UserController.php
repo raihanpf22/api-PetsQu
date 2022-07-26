@@ -78,14 +78,14 @@ class UserController extends Controller
     {
         $data = User::all();
 
-        return response()->json(["messages"=>"Get All Users", "status"=>200, compact('data')], 200);
+        return response()->json(["messages"=>"Get All Users", "status"=>200, 'data'=>compact('data')], 200);
     }
 
     public function show($id)
     {
         $data = User::find($id);
 
-        return response()->json(["messages"=>"Get User By Id", "status"=>200, compact('data')], 200);
+        return response()->json(["messages"=>"Get User By Id", "status"=>200, 'data'=>compact('data')], 200);
     }
 
 
